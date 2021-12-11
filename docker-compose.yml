@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  #Serviço do Wordpress
+  wp:
+    image: wordpress:latest
+    depends_on:
+      - db
+    ports:
+      - 8000:80
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wpdb
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - wpsite
+  #Serviço de banco de dados
+  db:
+    image: mysql:5.7
+    volumes:
+      - data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: wpdb
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    networks:
+      - wpsite
+  #Opcional para administrar a base
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - wpsite
+networks:
+  wpsite:
+volumes:
+  data:
+  src:
