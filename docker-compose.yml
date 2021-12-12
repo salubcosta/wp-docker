@@ -14,6 +14,9 @@ services:
       WORDPRESS_DB_USER: wpuser
       WORDPRESS_DB_PASSWORD: wppass
     volumes:
+    # Não vai influenciar em basicamente nada, apenas para mapear eu ter uma visão
+    # O ideal é criar uma pasta do thema ou do plugin e daí mapear, daí terei permissão RW nesta pasta
+    # Do jeito que está só vai servir pra visualizar o que foi baixado, apenas isso...
       - ./src:/var/www/html
     networks:
       - wpsite
